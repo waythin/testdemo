@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Enums\UserRoleEnum;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
@@ -19,7 +20,7 @@ class LoginController extends Controller
              $user = new User();
              $user->name = $data->name;
              $user->email = $data->email;
-             $user->role = 'employee';
+             $user->role = UserRoleEnum::R1;
              $user->password = null;
              $user->save();
           }

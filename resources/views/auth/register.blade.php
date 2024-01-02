@@ -27,10 +27,8 @@
 
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -38,6 +36,20 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="row mb-3">
+                            <label for="role"  class="col-md-4 col-form-label text-md-end">Select Role</label>
+                                <div class="col-md-6">
+                                    <select id="role" name="role" class="form-control">
+                                        <option value="" selected disabled class="form-control">-----select-----</option>
+                                        @foreach(\App\Enums\UserRoleEnum::getRoles() as $role)
+                                            <option value="{{ $role }}" class="form-control">{{ $role }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                        </div>
+                    
+                        
 
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
