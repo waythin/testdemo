@@ -53,6 +53,9 @@
                         @else
                                 
                         @if(Auth::user())
+                        <a class="nav-link " href="" role="button" >
+                           Role [{{Auth::user()->role}}]
+                        </a>
                         <a class="nav-link " href="{{route('product.list')}}" role="button" >
                             Show Products
                         </a>

@@ -34,3 +34,6 @@ Route::get('/login/google/callback', [App\Http\Controllers\Auth\LoginController:
 //product
 
 Route::get('/product/list', [ProductController::class, 'index'])->name('product.list');
+Route::get('/product/show/{id}', [ProductController::class, 'show'])->name('product.show');
+Route::get('/product/edit', [ProductController::class, 'edit'])->name('product.edit');
+Route::get('/product/report', [ProductController::class, 'edit'])->name('product.report');

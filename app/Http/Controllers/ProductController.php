@@ -19,8 +19,23 @@ class ProductController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-       
-                            $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+                        $viewUrl = route('product.show', $row->id);
+                        $editUrl = route('product.edit', $row->id);
+                        $reportUrl = route('product.report', $row->id);
+                        
+                        if (auth()->user()->role == 'Employee') {
+                            $btn = '<a href="' . $viewUrl . '" name="view" class="edit btn btn-primary btn-sm">View</a>';
+                        } 
+                        elseif(auth()->user()->role == 'Admin'){
+                            $btn = '<a href="' . $viewUrl . '" name="view" class="edit btn btn-primary btn-sm">View</a>
+                                    <a href="' . $editUrl . '" name="edit" class="edit btn btn-danger btn-sm">Edit</a>
+                                    <a href="' . $reportUrl . '" name="report" class="edit btn btn-success btn-sm">Report</a>';
+
+                        }
+                        else {
+                            $btn = '<a href="' . $viewUrl . '" name="view" class="edit btn btn-primary btn-sm">View</a>
+                                    <a href="' . $editUrl . '" name="edit" class="edit btn btn-danger btn-sm">Edit</a>';
+                        }
       
                             return $btn;
                     })
@@ -30,7 +45,6 @@ class ProductController extends Controller
           
           
         return view('productList');
-        // return view('productList', compact('products'));
     }
 
     /**
@@ -52,9 +66,13 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
-    {
-        //
+    public function show(Product $product, Request $request, $id)
+    {     
+        if($id){
+            $single = Product::find($id);
+        }
+       
+        return view('productView', compact('single'));
     }
 
     /**
@@ -77,6 +95,11 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Product $product)
+    {
+        //
+    }
+
+    public function report(Product $product)
     {
         //
     }

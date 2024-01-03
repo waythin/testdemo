@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Laravel 9 Yajra Datatables Tutorial - ItSolutionStuff.com</title>
+    <title>Products</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
@@ -18,7 +18,7 @@
 <body>
      
 <div class="container">
-    <h1>Laravel 9 Yajra Datatables Tutorial - ItSolutionStuff.com</h1>
+    <h1>Products</h1>
     <table class="table table-bordered data-table">
         <thead>
             <tr>
