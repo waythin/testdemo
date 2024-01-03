@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('price');
+            $table->string('status')->default('active');
             $table->timestamps();
         });
     }

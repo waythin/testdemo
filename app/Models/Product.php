@@ -9,5 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
+    const Active='active';
+    const Inactive='inactive';
     protected $guarded = [];
 }

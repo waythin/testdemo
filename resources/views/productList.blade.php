@@ -26,13 +26,48 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Price</th>
-                <th width="100px">Action</th>
+                <th>Status</th>
+                <th width="200px">Action</th>
             </tr>
         </thead>
         <tbody>
         </tbody>
     </table>
 </div>
+
+
+{{-- modal --}}
+<!-- Modal -->
+<div class="modal fade" id="productDetailsModal" tabindex="-1" role="dialog" aria-labelledby="productDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="productDetailsModalLabel">Product Details</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <div>
+                  <h4>Name</h4>
+                  <p id="productName"></p>
+              </div>
+              <div>
+                  <h4>Description:</h4>
+                  <p id="productDescription"></p>
+              </div>
+              <div>
+                  <h4>Price:</h4>
+                  <p id="productPrice"></p>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
+{{-- modal end --}}
      
 </body>
      
@@ -48,12 +83,76 @@
             {data: 'name', name: 'name'},
             {data: 'description', name: 'description'},
             {data: 'price', name: 'price'},
+            {data: 'status', name: 'status'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });
       
   });
 </script>
+{{-- <script>
+  function showProductDetails(productId) {
+      // Assuming you have a route to fetch product details by ID
+      $.ajax({
+          url: '/product/list/' + productId,
+          type: 'GET',
+          success: function(response) {
+              // Assuming you have a modal with the id 'productDetailsModal'
+              $('#productDetailsModal .modal-body').html(response);
+              $('#productDetailsModal').modal('show');
+          },
+          error: function(error) {
+              console.error('Error fetching product details:', error);
+          }
+      });
+  }
+</script> --}}
+
+{{-- <script>
+  function showProductDetails(productId) {
+      // Assuming you have a route to fetch product details by ID
+      var queryParams = {
+          id: productId,
+          anotherParam: 'value',  // Add more parameters as needed
+      };
+
+      // Construct the URL with the query string
+      var url = '/product/list?' + $.param(queryParams);
+
+      $.ajax({
+          url: url,
+          type: 'GET',
+          success: function(response) {
+              // Assuming you have a modal with the id 'productDetailsModal'
+              $('#productDetailsModal .modal-body').html(response);
+              $('#productDetailsModal').modal('show');
+          },
+          error: function(error) {
+              console.error('Error fetching product details:', error);
+          }
+      });
+  }
+</script> --}}
+
+<script>
+  function showProductDetails(productId) {
+      $.ajax({
+          url: '/product/show/' + productId,
+          type: 'GET',
+          success: function(response) {
+              // Update modal content with product details
+              $('#productName').text(response.name);
+              $('#productDescription').text(response.description);
+              $('#productPrice').text(response.price);
+              $('#productDetailsModal').modal('show');
+          },
+          error: function(error) {
+              console.error('Error fetching product details:', error);
+          }
+      });
+  }
+</script>
+
 </html>
 @endsection
 
@@ -61,32 +160,3 @@
 
 
 
-
-
-{{-- <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Product Name</th>
-        <th scope="col">Description</th>
-        <th scope="col">Price</th>
-        <th scope="col">Action</th>
-      </tr>
-    </thead>
-
-    @foreach($products as $key => $data)
-    <tbody>
-      <tr>
-        <th scope="row">{{$key + 1}}</th>
-        <td>{{$data->name}}</td>
-        <td>{{$data->description}}</td>
-        <td>{{$data->price}}</td>
-        <td>
-            <a href="#" class="btn btn-primary" role="button">Edit</a>
-
-        </td>
-       
-      </tr>
-    </tbody>
-    @endforeach
-  </table> --}}
