@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -35,5 +36,8 @@ Route::get('/login/google/callback', [App\Http\Controllers\Auth\LoginController:
 
 Route::get('/product/list', [ProductController::class, 'index'])->name('product.list');
 Route::get('/product/show/{id}', [ProductController::class, 'show'])->name('product.show');
-Route::get('/product/edit', [ProductController::class, 'edit'])->name('product.edit');
-Route::get('/product/report', [ProductController::class, 'edit'])->name('product.report');
+Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
+Route::post('/product/update', [ProductController::class, 'update'])->name('product.update');
+
+Route::get('/product/report/create/{id}', [ReportController::class, 'create'])->name('product.report.create');
+Route::post('/product/report/store', [ReportController::class, 'store'])->name('product.report.store');

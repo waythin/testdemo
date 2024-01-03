@@ -21,7 +21,7 @@ class ProductController extends Controller
                     ->addColumn('action', function($row){
                         $viewUrl = route('product.show', $row->id);
                         $editUrl = route('product.edit', $row->id);
-                        $reportUrl = route('product.report', $row->id);
+                        $reportUrl = route('product.report.create', $row->id);
                         
                         if (auth()->user()->role == 'Employee') {
                             $btn = '<a href="' . $viewUrl . '" name="view" class="edit btn btn-primary btn-sm">View</a>';
@@ -78,17 +78,38 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
-    {
-        //
+    public function edit(Product $product , $id)
+    {   
+        if($id){
+            $single = Product::find($id);
+        }
+        return view('productEdit', compact('single'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product ,$id)
     {
-        //
+        dd($id);
+         // Validate the form data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+        ]);
+
+        // Save the product to the database
+        $product = new Product([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'price' => $request->input('price'),
+        ]);
+
+        $product->save();
+
+        // Return a response (you can customize this based on your needs)
+        return response()->json(['message' => 'Product created successfully']);
     }
 
     /**
