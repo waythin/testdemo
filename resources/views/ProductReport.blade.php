@@ -35,8 +35,15 @@
             type: 'POST',
             data: formData,
             success: function(response) {
-                console.log(response);
-                alert('Success');
+                // console.log(response);
+                // alert('Success');
+                Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Report Updated!",
+                showConfirmButton: false,
+                timer: 1500
+                });
             },
             error: function(error) {
                 console.log(error);

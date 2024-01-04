@@ -134,6 +134,8 @@
   }
 </script> --}}
 
+
+{{-- single product view --}}
 <script>
   function showProductDetails(productId) {
       $.ajax({
