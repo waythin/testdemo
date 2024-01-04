@@ -7,6 +7,9 @@ use App\Enums\StatusEnum;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
+use PDF;
+
+
 
 class ProductController extends Controller
 {
@@ -28,6 +31,7 @@ class ProductController extends Controller
                         $viewUrl = route('product.show', $row->id);
                         $editUrl = route('product.edit', $row->id);
                         $reportUrl = route('product.report.create', $row->id);
+                        $pdfUrl = route('product.pdf', $row->id);
                         
                         if(auth()->user()->role == 'Admin'){
                             $statusEnumValues = StatusEnum::getStatus();
@@ -37,6 +41,7 @@ class ProductController extends Controller
                                     <a href="' . $editUrl . '" name="edit" class="edit btn btn-danger btn-sm">Edit</a>
                                     <a href="' . $reportUrl . '" name="report" class="edit btn btn-success btn-sm">Report</a>
                                     <button class="btn btn-info btn-sm" onclick="showProductDetails(' . $row->id . ')">View</button>
+                                    <a target="blank" href="' . $pdfUrl . '" name="report" class="edit btn btn-dark btn-sm">PDF</a>
                                     ';
 
                         }
@@ -145,8 +150,24 @@ class ProductController extends Controller
         //
     }
 
-    public function report(Product $product)
+    public function pdf(Product $product, $id)
     {
-        //
+        $data= [];
+        if($id){
+            $data = Product::find($id);
+            // dd($data);
+        }
+        $mpdf = new \Mpdf\Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4-P',
+            'default_font_size' => 12,
+            'default_font' => 'nikosh'
+          ]);
+
+
+          $mpdf->WriteHTML(view("productPDF", compact('data')));
+            return $mpdf->Output();
+
+        
     }
 }

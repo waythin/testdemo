@@ -38,6 +38,7 @@ Route::get('/product/list', [ProductController::class, 'index'])->name('product.
 Route::get('/product/show/{id}', [ProductController::class, 'show'])->name('product.show');
 Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
 Route::post('/product/update', [ProductController::class, 'update'])->name('product.update');
+Route::get('/product/pdf/{id}', [ProductController::class, 'pdf'])->name('product.pdf');
 
 Route::get('/product/report/create/{id}', [ReportController::class, 'create'])->name('product.report.create');
 Route::post('/product/report/store', [ReportController::class, 'store'])->name('product.report.store');
