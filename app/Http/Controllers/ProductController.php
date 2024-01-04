@@ -119,27 +119,24 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product ,$id)
+    public function update(Request $request, $id)
     {
-        dd($id);
-         // Validate the form data
+        // Validate the form data
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name'        => 'required|string',
             'description' => 'required|string',
-            'price' => 'required|numeric',
+            'price'       => 'required|numeric',
         ]);
 
-        // Save the product to the database
-        $product = new Product([
-            'name' => $request->input('name'),
+        // Update the product
+        $product = Product::find($id);
+        $product->update([
+            'name'        => $request->input('name'),
             'description' => $request->input('description'),
-            'price' => $request->input('price'),
+            'price'       => $request->input('price'),
         ]);
 
-        $product->save();
-
-        // Return a response (you can customize this based on your needs)
-        return response()->json(['message' => 'Product created successfully']);
+        return response()->json(['message' => 'Product updated successfully']);
     }
 
     /**
